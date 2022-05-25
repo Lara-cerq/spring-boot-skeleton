@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http:/www.thymeleaf.org">
+<head>
+<title>Login - Pay My buddy</title>
+<meta charset="utf-8">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+</head>
+<body class="text-center">
+	<div class="card">
+		<div class="card text-white bg-dark mb-3">
+			<div class="card-header">
+				<header>
+					<img src="troispoints.png" class="rounded float-left"
+						alt="paymybuddy">
+					<p class="text-center">Pay My Buddy</p>
+				</header>
+			</div>
+		</div>
+		<div class="card-body">
+			<div class="d-flex justify-content-center">
+				<div class="card border-secondary mb-3">
+					<div class="w-100 p-3">
+						<img src="logo.png" class="rounded float-center" alt="paymybuddy">
+						<br> <br>
+						<form th:action="@{/login}" method="POST"
+							style="max-width: 400px; margin: 0 auto;">
+							<p>
+								<input type="email"
+									style="background-image: url(email.png); background-position: left; background-repeat: no-repeat; padding-left: 30px; width: 175px;"
+									placeholder="Email" name="username" required />
+							</p>
+							<p>
+								<input type="password"
+									style="background-image: url(password.png); background-position: left; background-repeat: no-repeat; padding-left: 30px; width: 175px;"
+									placeholder="Password" name="password" required />
+							</p>
+							<p>
+								<input type="checkbox" name="remember-me" /> Remember me
+							</p>
+							<br>
+							<p>
+								<button type="submit" class="btn btn-primary">Login</button>
+							</p>
+							<a href="addUtilisateur">Pas encore inscrit? Inscrivez-vous
+							ici.</a>
+						</form>
+						<p th:if="${loginError}" class="alert alert-danger">Email ou mot de passe
+							incorrects!</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

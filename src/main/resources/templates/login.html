@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Login</title>
+<meta charset="utf-8">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+</head>
+<body class="text-center">
+						<form th:action="@{/login}" method="POST"
+							style="max-width: 400px; margin: 0 auto;">
+							<p>
+								<input type="username"
+									placeholder="Username" name="username" required />
+							</p>
+							<p>
+								<input type="password"
+									placeholder="Password" name="password" required />
+							</p>
+							<br>
+							<p>
+								<button type="submit" class="btn btn-primary">Login</button>
+							</p>
+						</form>
+						<p th:if="${error}" class="alert alert-danger">Email ou mot de passe
+							incorrects!</p>
+</body>
+</html>
