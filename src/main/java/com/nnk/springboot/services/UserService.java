@@ -13,7 +13,7 @@ import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
 
 @Service
-public class UserService{
+public class UserService {
 
 	@Autowired
 	UserRepository userRepository;
@@ -22,11 +22,16 @@ public class UserService{
 		return userRepository.findAll();
 	}
 
-//	@Override
-//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//		Objects.requireNonNull(username);
-//		User user = userRepository.findUserByUsername(username)
-//				.orElseThrow(() -> new UsernameNotFoundException("User not found"));
-//		return user;
-//	}
+	public User addUser(User user) {
+		return userRepository.save(user);
+	}
+
+	public Optional<User> findUserById(Integer id) {
+		return userRepository.findById(id);
+	}
+
+	public boolean deleteUser(User user) {
+		userRepository.delete(user);
+		return true;
+	}
 }

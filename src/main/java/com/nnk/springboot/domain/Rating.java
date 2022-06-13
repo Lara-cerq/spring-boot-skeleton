@@ -1,9 +1,6 @@
 package com.nnk.springboot.domain;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "rating")
@@ -62,6 +59,15 @@ public class Rating {
 
 	public Rating(String moodysRating, String sandPRating, String fitchRating, Integer orderNumber) {
 		super();
+		this.moodysRating = moodysRating;
+		this.sandPRating = sandPRating;
+		this.fitchRating = fitchRating;
+		this.orderNumber = orderNumber;
+	}
+
+	public Rating(Integer id, String moodysRating, String sandPRating, String fitchRating, Integer orderNumber) {
+		super();
+		this.id = id;
 		this.moodysRating = moodysRating;
 		this.sandPRating = sandPRating;
 		this.fitchRating = fitchRating;

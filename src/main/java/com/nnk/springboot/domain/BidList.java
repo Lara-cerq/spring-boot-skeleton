@@ -1,11 +1,8 @@
 package com.nnk.springboot.domain;
 
-import org.springframework.beans.factory.annotation.Required;
-
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
-import java.sql.Date;
+
 import java.sql.Timestamp;
 
 @Entity
@@ -236,6 +233,15 @@ public class BidList {
 	public BidList(@NotBlank(message = "Account is mandatory") String account,
 			@NotBlank(message = "Type is mandatory") String type, Double bidQuantity) {
 		super();
+		this.account = account;
+		this.type = type;
+		this.bidQuantity = bidQuantity;
+	}
+
+	public BidList(Integer bidlistId, @NotBlank(message = "Account is mandatory") String account,
+			@NotBlank(message = "Type is mandatory") String type, Double bidQuantity) {
+		super();
+		this.bidlistId = bidlistId;
 		this.account = account;
 		this.type = type;
 		this.bidQuantity = bidQuantity;

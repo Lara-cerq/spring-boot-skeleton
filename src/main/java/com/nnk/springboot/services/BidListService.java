@@ -19,15 +19,16 @@ public class BidListService {
 		return bidListRepository.findAll();
 	}
 
-	public void addBidList(BidList bidList) {
-		bidListRepository.save(bidList);
+	public BidList addBidList(BidList bidList) {
+		return bidListRepository.save(bidList);
 	}
 
-	public BidList findById(Integer id) {
-		return bidListRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bid list Id:" + id));
+	public Optional<BidList> findById(Integer id) {
+		return bidListRepository.findById(id);
 	}
 
-	public void deleteBidList(BidList bidList) {
+	public boolean deleteBidList(BidList bidList) {
 		bidListRepository.delete(bidList);
+		return true;
 	}
 }

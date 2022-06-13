@@ -1,13 +1,10 @@
 package com.nnk.springboot.domain;
 
-import java.util.Collection;
-
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
-//import org.springframework.security.core.GrantedAuthority;
-//import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "users")
@@ -17,7 +14,10 @@ public class User {
 	private Integer id;
 	@NotBlank(message = "Username is mandatory")
 	private String username;
+	@Valid
 	@NotBlank(message = "Password is mandatory")
+	@Size(min = 8, message = "Password de taille supérieure à 8")
+	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message = "Le password doit contenir au moins une majuscule, un nombre et un caractère spécial(@#$%^&+=)")
 	private String password;
 	@NotBlank(message = "FullName is mandatory")
 	private String fullname;
@@ -72,5 +72,33 @@ public class User {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public User(@NotBlank(message = "Username is mandatory") String username,
+			@Valid @NotBlank(message = "Password is mandatory") @Size(min = 8, message = "Password de taille supérieure à 8") @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message = "Le password doit contenir au moins une majuscule, un nombre et un caractère spécial(@#$%^&+=)") String password,
+			@NotBlank(message = "FullName is mandatory") String fullname,
+			@NotBlank(message = "Role is mandatory") String role) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.fullname = fullname;
+		this.role = role;
+	}
+
+	public User(Integer id, @NotBlank(message = "Username is mandatory") String username,
+			@Valid @NotBlank(message = "Password is mandatory") @Size(min = 8, message = "Password de taille supérieure à 8") @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message = "Le password doit contenir au moins une majuscule, un nombre et un caractère spécial(@#$%^&+=)") String password,
+			@NotBlank(message = "FullName is mandatory") String fullname,
+			@NotBlank(message = "Role is mandatory") String role) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.fullname = fullname;
+		this.role = role;
+	}
+
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 }

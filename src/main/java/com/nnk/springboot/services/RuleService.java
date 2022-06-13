@@ -1,6 +1,7 @@
 package com.nnk.springboot.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,16 +19,17 @@ public class RuleService {
 		return ruleRepository.findAll();
 	}
 
-	public void addRule(RuleName rule) {
-		ruleRepository.save(rule);
+	public RuleName addRule(RuleName rule) {
+		return ruleRepository.save(rule);
 	}
 
-	public RuleName findById(Integer id) {
-		return ruleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid rule Id:" + id));
+	public Optional<RuleName> findById(Integer id) {
+		return ruleRepository.findById(id);
 	}
 
-	public void deleteRule(RuleName rule) {
+	public boolean deleteRule(RuleName rule) {
 		ruleRepository.delete(rule);
+		return true;
 	}
 
 }

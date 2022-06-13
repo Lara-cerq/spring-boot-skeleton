@@ -224,6 +224,13 @@ public class Trade {
 		this.type = type;
 	}
 
+	public Trade(Integer tradeId, String account, String type) {
+		super();
+		this.tradeId = tradeId;
+		this.account = account;
+		this.type = type;
+	}
+
 	public Trade() {
 		super();
 		// TODO Auto-generated constructor stub

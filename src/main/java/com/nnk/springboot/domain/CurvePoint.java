@@ -76,6 +76,14 @@ public class CurvePoint {
 		this.value = value;
 	}
 
+	public CurvePoint(Integer id, @NotNull(message = "must not be null") Integer curveId, Double term, Double value) {
+		super();
+		this.id = id;
+		this.curveId = curveId;
+		this.term = term;
+		this.value = value;
+	}
+
 	public CurvePoint() {
 		super();
 		// TODO Auto-generated constructor stub

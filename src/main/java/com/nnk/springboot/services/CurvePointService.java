@@ -1,6 +1,7 @@
 package com.nnk.springboot.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,16 +19,17 @@ public class CurvePointService {
 		return curvePointRepository.findAll();
 	}
 	
-	public void addCurvePoint(CurvePoint curvePoint) {
-		curvePointRepository.save(curvePoint);
+	public CurvePoint addCurvePoint(CurvePoint curvePoint) {
+		return curvePointRepository.save(curvePoint);
 	}
 	
-	public CurvePoint findById(Integer id) {
-		return curvePointRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid curve point Id:" + id));
+	public Optional<CurvePoint> findById(Integer id) {
+		return curvePointRepository.findById(id);
 	}
 	
-	public void deleteCurvePoint(CurvePoint curvePoint) {
+	public boolean deleteCurvePoint(CurvePoint curvePoint) {
 		curvePointRepository.delete(curvePoint);
+		return true;
 	}
 
 }

@@ -1,4 +1,6 @@
-package com.nnk.springboot;
+package com.nnk.springboot.repository;
+
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,18 +9,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
- * Created by Khang Nguyen.
- * Email: khang.nguyen@banvien.com
- * Date: 09/03/2019
+ * Created by Khang Nguyen. Email: khang.nguyen@banvien.com Date: 09/03/2019
  * Time: 11:26 AM
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class PasswordEncodeTest {
-    @Test
-    public void testPassword() {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String pw = encoder.encode("123456");
-        System.out.println("[ "+ pw + " ]");
-    }
+
+	@Test
+	public void testPassword() {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String pw = encoder.encode("123456");
+		assertTrue(encoder.matches("123456", pw));
+	}
 }

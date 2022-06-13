@@ -3,6 +3,8 @@ package com.nnk.springboot.controllers;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.services.BidListService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,21 +13,29 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 @Controller
 public class BidListController {
 
+	private static Logger logger = LoggerFactory.getLogger(BidListController.class);
+
 	@Autowired
 	BidListService bidListService;
 
-	@RequestMapping("/bidList/list")
-	public String home(Model model) {
+	@RequestMapping(value = "/bidList/list", method = RequestMethod.GET)
+	public String home(Model model, Principal principal) {
+		// find all bidLists
 		List<BidList> bidLists = bidListService.getAllBidList();
 		model.addAttribute("bidLists", bidLists);
+		model.addAttribute("name", principal.getName());
 		return "bidList/list";
 	}
 
@@ -34,13 +44,17 @@ public class BidListController {
 		return "bidList/add";
 	}
 
+	@Transactional
 	@PostMapping("/bidList/validate")
 	public String validate(@Valid BidList bid, BindingResult result, Model model) {
+		// check if data is valid
 		if (!result.hasErrors()) {
+			// add in DB
 			bidListService.addBidList(bid);
-
+			logger.info("NEW BID LIST ADDED");
 			List<BidList> bidLists = bidListService.getAllBidList();
 			model.addAttribute("bidLists", bidLists);
+			// return list
 			return "redirect:/bidList/list";
 		}
 		return "bidList/add";
@@ -48,35 +62,42 @@ public class BidListController {
 
 	@GetMapping("/bidList/update/{id}")
 	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-		// TODO: get Bid by Id and to model then show to the form
-		BidList bid = bidListService.findById(id);
-		model.addAttribute("bid", bid);
+		// get Bid by Id
+		BidList bid = bidListService.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid bid list Id:" + id));
+		model.addAttribute("bidList", bid);
 		return "bidList/update";
 	}
 
+	@Transactional
 	@PostMapping("/bidList/update/{id}")
 	public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList, BindingResult result, Model model) {
-		// TODO: check required fields, if valid call service to update Bid and return
+		// check required fields
 		if (result.hasErrors()) {
 			return "bidList/update";
 		}
 		bidList.setBidlistId(id);
+		// to update Bid
 		bidListService.addBidList(bidList);
-
+		logger.info("BID LIST UPDATED");
 		// list Bid
 		List<BidList> bidLists = bidListService.getAllBidList();
 		model.addAttribute("bidLists", bidLists);
+		// return to the list
 		return "redirect:/bidList/list";
 	}
 
-	@GetMapping("/bidList/delete/{id}")
-	public String deleteBid(@PathVariable("id") Integer id, Model model) {
-		// TODO: Find Bid by Id and delete the bid, return to Bid list
-		BidList bid = bidListService.findById(id);
-		bidListService.deleteBidList(bid);
-
+	@Transactional
+	@GetMapping(value = "/bidList/delete/{id}")
+	public String deleteBid(@PathVariable(required = true, name = "id") Integer id, Model model) {
+		// Find Bid by Id
+		Optional<BidList> bid = bidListService.findById(id);
+		// delete the bid
+		bidListService.deleteBidList(bid.get());
+		logger.info("BID LIST DELETED");
 		List<BidList> bidLists = bidListService.getAllBidList();
 		model.addAttribute("bidLists", bidLists);
+		// return to Bid list
 		return "redirect:/bidList/list";
 	}
 }

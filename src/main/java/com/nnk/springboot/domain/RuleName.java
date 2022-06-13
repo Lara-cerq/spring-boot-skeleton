@@ -1,8 +1,6 @@
 package com.nnk.springboot.domain;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "rulename")
@@ -87,5 +85,22 @@ public class RuleName {
 		this.template = template;
 		this.sqlStr = sqlStr;
 		this.sqlPart = sqlPart;
+	}
+
+	public RuleName(Integer id, String name, String description, String json, String template, String sqlStr,
+			String sqlPart) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.json = json;
+		this.template = template;
+		this.sqlStr = sqlStr;
+		this.sqlPart = sqlPart;
+	}
+
+	public RuleName() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 }
